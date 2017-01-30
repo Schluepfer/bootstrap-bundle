@@ -105,8 +105,8 @@ class GenerateCommand extends ContainerAwareCommand
         $container = $this->getContainer();
 
         if (Kernel::VERSION_ID >= 20500) {
-            $container->enterScope('request');
-            $container->set('request', new Request(), 'request');
+            $stack = $container->get('request_stack');
+            $stack->push(new Request());
         }
 
         // We can now use Twig to render the bootstrap.less file and save it
